@@ -1,3 +1,2 @@
-javascript note
-version 3
+## javascript note
 
