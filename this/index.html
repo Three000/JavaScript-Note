@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="div1">123123</div>
+    <script>
+        window.id = 'div2';
+        var obj = {
+            id: 1,
+            click: function() {
+                console.log(this.id);
+                return (function(d) { // 普通函数 this指向全局
+                    console.log(this.id) // div2
+                    document.getElementById('div1').onclick = () => { // 箭头符号this指向代码初始化时候的作用域，所以与onclick无关。
+                        console.log(this.id); //  div1 ? div 2 ? 1 ？     div2
+                    }
+                })(this)
+            }
+        };
+        // obj.click(); //作为 对象调用 IIFE前的this.id == 1
+        var a = obj.click;
+        a(); //作为普通函数调用 this.id == div2
+        a.apply(obj);
+
+        var getId = document.getElementById;
+        getId('id') // 作为普通函数调用 this指向全局 报错 Illegal invocation
+        getId = (function(func) {
+            return function() {
+                return func.apply(document, arguments);
+            }
+        })(document.getElementById);
+        getId('id');
+
+        getId = document.getElementById.bind(document);
+    </script>
+</body>
+
+</html>

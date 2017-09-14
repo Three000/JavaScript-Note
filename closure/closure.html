@@ -45,6 +45,13 @@
         function a() {
             console.log(arguments, arguments.length, console.log(arguments.callee));
         }
+
+        var testObj = {
+            sendTrack: function() {
+                var img = new Image();
+                img.src = 'http://ulog-service.dev.56qq.cn/web/clientlog/save.do' + '?temp=' + Math.random(new Date());
+            }
+        }
     </script>
 </body>
 
