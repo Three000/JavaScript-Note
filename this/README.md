@@ -27,20 +27,21 @@ a(); // 作为普通函数调用 this.id == div2
 * 作为构造函数调用，this指向构造函数
 * 箭头符号指向代码初始化时外层作用域
 
-#
+
 
 ## apply && call
 `call是apply语法糖,apply性能优于call`
 - 修正this
 ```javascript
-var getId = (function(func) {
+var getId = document.getElementById;
+getId('div1') // 普通函数调用 this指向全局 error: illegal invocation
+getId = (function(func) {
     return function() {
         return func.apply(document, arguments);
     }
-})(document.getElementById);
-getId('id');
+})(document.getElementById); // div1
 ```
-`Function.prototype.bind`
+- Function.prototype.bind
 ```javascript
-getId = document.getElementById.bind(document);
+getId = document.getElementById.bind(document); // div1
 ```
